@@ -52,8 +52,7 @@ interface University {
 }
 
 export default function UniversityFinderPage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+
   const [isPending, startTransition] = useTransition();
 
   // State for universities and filter options
@@ -74,7 +73,7 @@ export default function UniversityFinderPage() {
   // Tuition and ranking sliders
   const [tuitionRange, setTuitionRange] = useState<[number, number]>([0, 100000]);
   const [rankingRange, setRankingRange] = useState<[number, number]>([1, 1000]);
-  const [yearRange, setYearRange] = useState<[number, number]>([1800, 2025]);
+  const [yearRange, setYearRange] = useState<[number, number]>([1400, 2025]);
 
   // Compare feature state
   const [selectedUniversities, setSelectedUniversities] = useState<string[]>([]);
@@ -291,7 +290,7 @@ export default function UniversityFinderPage() {
   }
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-10 px-6">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-2">Find Your Perfect University</h1>
@@ -301,7 +300,7 @@ export default function UniversityFinderPage() {
       </div>
 
       {/* Quick Filters */}
-      <Card className="p-4 mb-6">
+      <Card className="p-4 mb-6 border border-primary">
         <div className="flex items-center gap-2 mb-3">
           <Sparkles className="w-5 h-5 text-primary" />
           <h3 className="font-semibold">Quick Filters</h3>
@@ -349,13 +348,13 @@ export default function UniversityFinderPage() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Filters Sidebar */}
         <div className={`lg:col-span-1 ${showFilters ? "" : "hidden lg:block"}`}>
-          <Card className="p-6 sticky top-4">
+          <Card className="p-6 sticky top-4 border border-primary">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold flex items-center gap-2">
                 <Filter className="w-5 h-5" />
                 Filters
               </h2>
-              <Button variant="ghost" size="sm" onClick={resetFilters}>
+              <Button variant="outline" size="sm" onClick={resetFilters}>
                 Reset
               </Button>
             </div>
@@ -364,7 +363,7 @@ export default function UniversityFinderPage() {
               {/* Search */}
               <div>
                 <Label htmlFor="search">Search</Label>
-                <div className="relative mt-1">
+                <div className="relative mt-1 border rounded-md border-gray-400">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
                     id="search"
@@ -383,7 +382,7 @@ export default function UniversityFinderPage() {
                   value={filters.country}
                   onValueChange={(value) => updateFilter("country", value)}
                 >
-                  <SelectTrigger id="country" className="mt-1">
+                  <SelectTrigger id="country" className="mt-1 border border-gray-400">
                     <SelectValue placeholder="Select country" />
                   </SelectTrigger>
                   <SelectContent>
@@ -404,7 +403,7 @@ export default function UniversityFinderPage() {
                   value={filters.city}
                   onValueChange={(value) => updateFilter("city", value)}
                 >
-                  <SelectTrigger id="city" className="mt-1">
+                  <SelectTrigger id="city" className="mt-1 border border-gray-400">
                     <SelectValue placeholder="Select city" />
                   </SelectTrigger>
                   <SelectContent>
@@ -471,7 +470,7 @@ export default function UniversityFinderPage() {
                   value={filters.sortBy}
                   onValueChange={(value: any) => updateFilter("sortBy", value)}
                 >
-                  <SelectTrigger id="sort" className="mt-1">
+                  <SelectTrigger id="sort" className="mt-1 border border-gray-400">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -490,7 +489,7 @@ export default function UniversityFinderPage() {
                   value={filters.sortOrder}
                   onValueChange={(value: any) => updateFilter("sortOrder", value)}
                 >
-                  <SelectTrigger id="order" className="mt-1">
+                  <SelectTrigger id="order" className="mt-1 border border-gray-400">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -550,7 +549,7 @@ export default function UniversityFinderPage() {
           )}
 
           {/* Results Card */}
-          <Card className="p-6">
+          <Card className="p-6 border border-primary rounded-xl">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold">
                 {isLoading ? "Loading..." : `${universities.length} Universities Found`}
@@ -588,6 +587,7 @@ export default function UniversityFinderPage() {
                       <TableRow key={university.id}>
                         <TableCell>
                           <Checkbox
+                            className="border border-black"
                             checked={selectedUniversities.includes(university.id)}
                             onCheckedChange={() =>
                               toggleUniversitySelection(university.id)
@@ -656,7 +656,7 @@ export default function UniversityFinderPage() {
           {compareData.length === 2 && (
             <div className="grid grid-cols-2 gap-6 mt-4">
               {compareData.map((university) => (
-                <Card key={university.id} className="p-6">
+                <Card key={university.id} className="p-6 border border-primary">
                   <h3 className="text-xl font-bold mb-4">{university.name}</h3>
 
                   <div className="space-y-3">
@@ -694,7 +694,7 @@ export default function UniversityFinderPage() {
             </div>
           )}
 
-          <div className="mt-6 pt-4 border-t">
+          <div className="mt-2 pt-4 border-t border-gray-400">
             <h4 className="font-semibold mb-3">Key Differences</h4>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between items-center">

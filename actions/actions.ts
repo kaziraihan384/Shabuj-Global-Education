@@ -7,29 +7,29 @@ import { unstable_cache } from "next/cache";
 
 
 export async function createUniversity(formData: FormData) {
-    const data = await prisma.university.create({
-        data: {
-            name: formData.get("name") as string,
-            country: formData.get("country") as string,
-            city: formData.get("city") as string,
-            tuitionFee: Number(formData.get("tuitionFee")),
-            ranking: Number(formData.get("ranking")),
-            establishedYear: Number(formData.get("establishedYear")),
-        },
+  const data = await prisma.university.create({
+    data: {
+      name: formData.get("name") as string,
+      country: formData.get("country") as string,
+      city: formData.get("city") as string,
+      tuitionFee: Number(formData.get("tuitionFee")),
+      ranking: Number(formData.get("ranking")),
+      establishedYear: Number(formData.get("establishedYear")),
+    },
 
-    });
+  });
 
-    return {status: 200, data: data}
-    
+  return { status: 200, data: data }
+
 }
 
 
 export async function getAllUniversities() {
-    const data = await prisma.university.findMany({
-        orderBy: { createdAt: "desc" },
-    });
+  const data = await prisma.university.findMany({
+    orderBy: { createdAt: "desc" },
+  });
 
-    return {status: 200, data: data};
+  return { status: 200, data: data };
 }
 
 
@@ -75,7 +75,24 @@ export async function getFilterOptions(): Promise<FilterOptions> {
       const tuitionFees = universities.map((u) => u.tuitionFee);
       const rankings = universities.map((u) => u.ranking);
       const years = universities.map((u) => u.establishedYear);
-
+      console.log(
+        {
+          countries,
+          cities,
+          tuitionRange: {
+            min: Math.min(...tuitionFees),
+            max: Math.max(...tuitionFees),
+          },
+          rankingRange: {
+            min: Math.min(...rankings),
+            max: Math.max(...rankings),
+          },
+          establishedRange: {
+            min: Math.min(...years),
+            max: Math.max(...years),
+          },
+        }
+      )
       return {
         countries,
         cities,
