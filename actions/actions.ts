@@ -32,6 +32,47 @@ export async function getAllUniversities() {
   return { status: 200, data: data };
 }
 
+// Add these two functions to your existing actions.ts file
+
+export async function updateUniversity(formData: FormData) {
+  try {
+    const id = formData.get("id") as string;
+    
+    const data = await prisma.university.update({
+      where: { id },
+      data: {
+        name: formData.get("name") as string,
+        country: formData.get("country") as string,
+        city: formData.get("city") as string,
+        tuitionFee: Number(formData.get("tuitionFee")),
+        ranking: Number(formData.get("ranking")),
+        establishedYear: Number(formData.get("establishedYear")),
+      },
+    });
+
+   
+
+    return { status: 200, data: data };
+  } catch (error) {
+    console.error("Error updating university:", error);
+    return { status: 500, error: "Failed to update university" };
+  }
+}
+
+export async function deleteUniversity(id: string) {
+  try {
+    const data = await prisma.university.delete({
+      where: { id },
+    });
+
+    
+
+    return { status: 200, data: data };
+  } catch (error) {
+    console.error("Error deleting university:", error);
+    return { status: 500, error: "Failed to delete university" };
+  }
+}
 
 export interface UniversityFilters {
   country?: string;
